@@ -13,14 +13,20 @@
     <link href="css/timeline.css" rel="stylesheet">
 
     <script src="js/script.js"></script>
-
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <title>Hello, world!</title>
+
+    
 </head>
 
 <body>
-    <page size="A4">
+    <div id="editor"></div>
+    <div class="text-center pt-4 pb-4">
+        <button id="cmd">Generate PDF</button>
+    </div>
+    <page id="content" size="A4">
         <leftside>
-            <div class="pl-10">
+            <div class="pl-10 pt-5">
                 <div class="row">
                     <div class="col-md-9">
                         <div class="title">KUNKUMA GEETH PRASANNA HEWAGE</div>
@@ -185,9 +191,41 @@
             </div>
         </leftside>
         <rightside>
-            sfgsf
+            <div class="pt-5">
+                sfgsf
+            </div>
         </rightside>
     </page>
-</body>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script>
+        // $(document).on('click','#cmd',function(){
+        //     let pdf = new jsPDF();
+        //     let section=$('#content');
+        //     let page= function() {
+        //         pdf.save('pagename.pdf');
+                
+        //     };
+        //     pdf.addHTML(section,page);
+        // })
+
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+
+        $('#cmd').click(function () {
+            doc.fromHTML($('#content').html(), 15, 15, {
+                'width': 170,
+                    'elementHandlers': specialElementHandlers
+            });
+            doc.save('sample-file.pdf');
+        });
+
+    </script>
+</body>
 </html>
